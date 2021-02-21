@@ -3,6 +3,20 @@ name: DJANGO REST workflow
 on: [ push ]
 
 jobs:
+  build:
+    name: Build For YAML copy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "docker-compose.yaml"
+          target: ""
   tests:
     runs-on: ubuntu-latest
 
@@ -24,17 +38,7 @@ jobs:
 
       - name: Test with pytest
         run: pytest
-      - uses: actions/checkout@master
 
-      - name: copy docker-compose.yaml via ssh key
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "docker-compose.yaml"
-          target: "docker-compose.yaml"
 
   build_and_push_to_docker_hub:
     name: Push Docker image to Docker Hub
@@ -55,6 +59,7 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/yamdb:latest
+
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
