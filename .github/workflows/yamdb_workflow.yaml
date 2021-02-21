@@ -32,7 +32,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
-          key: ${{ secrets.KEY }}
+          key: ${{ secrets.SSH_KEY }}
           source: "docker-compose.yaml"
           target: "docker-compose.yaml"
 
