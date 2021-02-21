@@ -73,15 +73,13 @@ jobs:
             sudo curl -L "https://github.com/docker/compose/releases/download/1.28.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
             sudo pip3 install dump-env
-            docker cp $id:code/docker-compose.yaml - > local-tar-file
 
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/yamdb:latest
             id=$(docker create ${{ secrets.DOCKER_USERNAME }}/yamdb:latest)
             docker cp $id:code/docker-compose.yaml docker-compose.yaml
-            docker cp $id:code/.env.template .env.template
+            docker cp $id:code/.env.template .env
             docker rm -v $id
 
-            sudo dump-env --template=.env.template > .env
             sudo docker-compose up --force-recreate
   send_message:
     runs-on: ubuntu-latest
