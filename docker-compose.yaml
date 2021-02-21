@@ -1,0 +1,40 @@
+version: '3.8'
+
+volumes:
+  postgres_data:
+  static_sp2:
+  media_sp2:
+  logs_sp2:
+
+services:
+  db:
+    image: postgres:12.4
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+  web:
+    container_name: django
+    image: matakov/yamdb:latest
+    restart: always
+    environment:
+      - PORT=8000
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    volumes:
+      - static_sp2:/code/static
+      - media_sp2:/code/media
+  caddy:
+    image: lgatica/django-caddy:latest
+    links:
+      - web:django
+    environment:
+      - PORT=8000
+    ports:
+      - 8888:80
+    volumes:
+      - static_sp2:/var/www/static
+      - media_sp2:/var/www/media
+      - logs_sp2:/var/log
