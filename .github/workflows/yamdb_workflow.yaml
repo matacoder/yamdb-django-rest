@@ -77,8 +77,8 @@ jobs:
 
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/yamdb:latest
             id=$(docker create ${{ secrets.DOCKER_USERNAME }}/yamdb:latest)
-            docker cp $id:code/docker-compose.yaml - > docker-compose.yaml
-            docker cp $id:code/.env.template - > .env.template
+            docker cp $id:code/docker-compose.yaml docker-compose.yaml
+            docker cp $id:code/.env.template .env.template
             docker rm -v $id
 
             sudo dump-env --template=.env.template > .env
