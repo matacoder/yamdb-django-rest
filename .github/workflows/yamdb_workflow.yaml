@@ -3,21 +3,6 @@ name: DJANGO REST workflow
 on: [ push ]
 
 jobs:
-  build:
-    name: Build For YAML copy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "docker-compose.yaml "
-          target: "home/matakov"
-          use_insecure_cipher: true
   tests:
     runs-on: ubuntu-latest
     needs: build
@@ -72,7 +57,6 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo apt-get remove docker docker-engine docker.io containerd runc
             sudo apt-get update
             sudo apt-get install \
                 apt-transport-https \
@@ -90,8 +74,15 @@ jobs:
             sudo curl -L "https://github.com/docker/compose/releases/download/1.28.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
             sudo pip3 install dump-env
-            sudo dump-env --template=.env.template > .env
+            docker cp $id:code/docker-compose.yaml - > local-tar-file
+
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/yamdb:latest
+            id=$(docker create ${{ secrets.DOCKER_USERNAME }}/yamdb:latest)
+            docker cp $id:code/docker-compose.yaml - > docker-compose.yaml
+            docker cp $id:code/.env.template - > .env.template
+            docker rm -v $id
+
+            sudo dump-env --template=.env.template > .env
             sudo docker-compose up --force-recreate
   send_message:
     runs-on: ubuntu-latest
