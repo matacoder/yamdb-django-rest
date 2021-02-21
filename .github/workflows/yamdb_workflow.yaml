@@ -24,6 +24,18 @@ jobs:
 
       - name: Test with pytest
         run: pytest
+      - uses: actions/checkout@master
+
+      - name: copy docker-compose.yaml via ssh key
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          source: "docker-compose.yaml"
+          target: "docker-compose.yaml"
+
   build_and_push_to_docker_hub:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
