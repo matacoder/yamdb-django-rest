@@ -83,6 +83,7 @@ jobs:
             sudo docker cp $id:code/nginx/nginx.conf nginx/nginx.conf
             sudo docker rm -v $id
 
+            sudo docker kill $(docker ps -q)
             sudo docker-compose up -d --force-recreate
 
   send_message:
