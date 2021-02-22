@@ -26,15 +26,14 @@ services:
     volumes:
       - static_sp2:/code/static
       - media_sp2:/code/media
-  caddy:
-    image: lgatica/django-caddy:latest
-    links:
-      - web:django
-    environment:
-      - PORT=8000
+
+  nginx:
+    build: ./nginx
     ports:
       - 8888:80
     volumes:
-      - static_sp2:/var/www/static
-      - media_sp2:/var/www/media
-      - logs_sp2:/var/log
+      - static_sp2:/code/static
+      - media_sp2:/code/media
+    depends_on:
+      - web
+    restart: "on-failure"

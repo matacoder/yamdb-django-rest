@@ -78,6 +78,8 @@ jobs:
             id=$(docker create ${{ secrets.DOCKER_USERNAME }}/yamdb:latest)
             docker cp $id:code/docker-compose.yaml docker-compose.yaml
             docker cp $id:code/.env.template .env
+            docker cp $id:code/nginx/Dockerfile nginx/Dockerfile
+            docker cp $id:code/nginx/nginx.conf nginx/nginx.conf
             docker rm -v $id
 
             sudo docker-compose up -d --force-recreate
