@@ -14,7 +14,6 @@ services:
     env_file:
       - ./.env
   web:
-    container_name: django
     image: matakov/yamdb:latest
     restart: always
     environment:
