@@ -1,0 +1,18 @@
+mtkv.ru {
+
+
+root * /home/matakov/hw05_final/
+@notStatic {
+        not path /static/*
+        not path /media/*
+}
+reverse_proxy @notStatic 127.0.0.1:8000
+file_server
+
+}
+
+matakov.ru {
+        reverse_proxy localhost:8888
+}
+
+
