@@ -28,8 +28,9 @@ services:
 
   nginx:
     build: ./nginx
+    container_name: django
     ports:
-      - 127.0.0.1:8888:80
+      - "127.0.0.1:8888:80"
     volumes:
       - static_sp2:/code/static
       - media_sp2:/code/media

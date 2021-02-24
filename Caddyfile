@@ -12,7 +12,7 @@ file_server
 }
 
 matakov.ru {
-        reverse_proxy localhost:8888
+        reverse_proxy 127.0.0.1:8888
 }
 
 
