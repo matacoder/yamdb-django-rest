@@ -74,7 +74,7 @@ jobs:
       - name: Add env var
         run: |
           openssl version
-          docker-compose -v
+          docker-compose version
           docker version
           export DB_ENGINE=${{ secrets.DB_ENGINE }}
           export DB_NAME=${{ secrets.DB_NAME }}
