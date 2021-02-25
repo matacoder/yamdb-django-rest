@@ -64,8 +64,9 @@ jobs:
 #          run: |
 #            scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}:/home/matakov/test3.yaml
 
+
       - name: Install SSH key
-        uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1.1.0
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
           ssh-host: ${{ secrets.IP_HOST }}
