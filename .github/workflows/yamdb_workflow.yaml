@@ -73,6 +73,7 @@ jobs:
 
       - name: Add env var
         run: |
+          sudo pip install docker-compose
           openssl version
           docker-compose version
           docker version
