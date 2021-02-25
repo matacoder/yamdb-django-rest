@@ -28,13 +28,14 @@ services:
       - media_sp2:/code/media
 
   nginx:
-    build: ./nginx
-
+    # build: ./nginx
+    image: nginx:1.19.0-alpine
     ports:
       - "127.0.0.1:8888:80"
     volumes:
       - static_sp2:/code/static
       - media_sp2:/code/media
+      - ./nginx/:/etc/nginx/conf.d/
     depends_on:
       - web
     restart: "on-failure"
