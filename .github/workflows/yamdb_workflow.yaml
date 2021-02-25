@@ -60,14 +60,14 @@ jobs:
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          run: |
+            ssh-keyscan -H ${{ secrets.IP_HOST }}  >> ~/.ssh/known_hosts
+            docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}"
+            docker context use remote
+            docker ps
+            docker-compose --context remote up -d --force-recreate
 
-      - name: Docker compose up
-        run: |
-          docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}"
-          ssh-keyscan -H ${{ secrets.IP_HOST }}  >> ~/.ssh/known_hosts
-          docker context use remote
-          docker ps
-          docker-compose --context remote up -d --force-recreate
+
 
 #  deploy:
 #    runs-on: ubuntu-latest
