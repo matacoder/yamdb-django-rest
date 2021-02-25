@@ -74,13 +74,21 @@ jobs:
             sudo chmod +x /usr/local/bin/docker-compose
             sudo pip3 install dump-env
 
+            export DB_ENGINE=${{ secrets.DB_ENGINE }}
+            export DB_NAME=${{ secrets.DB_NAME }}
+            export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            export DB_HOST=${{ secrets.DB_HOST }}
+            export DB_PORT=${{ secrets.DB_PORT }}
+            export SECRET_KEY=${{ secrets.SECRET_KEY }}
+            export DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
+            export DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
+            export DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
+
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/yamdb:latest
             id=$(docker create ${{ secrets.DOCKER_USERNAME }}/yamdb:latest)
             sudo docker cp $id:code/docker-compose.yaml docker-compose.yaml
-            sudo docker cp $id:code/.env.template .env
-            sudo mkdir nginx
-            sudo docker cp $id:code/nginx/Dockerfile nginx/Dockerfile
-            sudo docker cp $id:code/nginx/nginx.conf nginx/nginx.conf
+            sudo docker cp $id:code/Caddyfile Caddyfile
             sudo docker rm -v $id
 
             docker kill $(docker ps -q)
