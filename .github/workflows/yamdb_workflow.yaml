@@ -67,7 +67,7 @@ jobs:
       - name: Install SSH key
         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_KEY }}
           ssh-host: ${{ secrets.IP_HOST }}
 
       - name: Docker compose up
