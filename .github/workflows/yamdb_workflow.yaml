@@ -71,13 +71,25 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
           ssh-host: ${{ secrets.IP_HOST }}
 
+      - name: Add env var
+        run: |
+          export DB_ENGINE=${{ secrets.DB_ENGINE }}
+          export DB_NAME=${{ secrets.DB_NAME }}
+          export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          export DB_HOST=${{ secrets.DB_HOST }}
+          export DB_PORT=${{ secrets.DB_PORT }}
+          export SECRET_KEY=${{ secrets.SECRET_KEY }}
+          export DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
+          export DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
+          export DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
+
       - name: Docker compose up
         run: |
-          scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}:/home/matakov/test2.yaml
-          ssh-keyscan -H ${{ secrets.IP_HOST }}  >> ~/.ssh/known_hosts
           docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}"
           docker context use remote
-          docker ps
+          docker kill $(docker ps -q)
+          docker rm $(docker ps -a -q)
           docker-compose --context remote up -d --force-recreate
 
 #  deploy:
