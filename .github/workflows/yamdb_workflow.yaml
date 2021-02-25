@@ -73,6 +73,7 @@ jobs:
 
       - name: Add env var
         run: |
+          sudo apt update && sudo apt upgrade -y
           export DB_ENGINE=${{ secrets.DB_ENGINE }}
           export DB_NAME=${{ secrets.DB_NAME }}
           export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
