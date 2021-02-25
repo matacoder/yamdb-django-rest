@@ -64,6 +64,7 @@ jobs:
 
       - name: Docker compose up
         run: |
+          ls -al ~/.ssh
           scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}:/home/matakov/test2.yaml
           ssh-keyscan -H ${{ secrets.IP_HOST }}  >> ~/.ssh/known_hosts
           docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}"
