@@ -11,18 +11,17 @@ services:
     image: postgres:12.4
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-#    env_file:
-#      - ./.env
+    env_file:
+      - ./.env
   django:
     image: matakov/yamdb:latest
-    container_name: django
     restart: always
     environment:
       - PORT=8000
     depends_on:
       - db
-#    env_file:
-#      - ./.env
+    env_file:
+      - ./.env
     volumes:
       - static_sp2:/code/static
       - media_sp2:/code/media
@@ -30,7 +29,6 @@ services:
     entrypoint: /code/entrypoint.sh
 
   nginx:
-    # build: ./nginx
     image: nginx:1.19.0-alpine
     ports:
       - "127.0.0.1:8888:80"
