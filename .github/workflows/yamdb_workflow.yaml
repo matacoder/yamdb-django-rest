@@ -66,8 +66,7 @@ jobs:
           docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}"
           ssh-keyscan -H ${{ secrets.IP_HOST }}  >> ~/.ssh/known_hosts
           docker context use remote
-#          docker kill $(docker ps -q)
-#          docker rm $(docker ps -a -q)
+          docker ps
           docker-compose --context remote up -d --force-recreate
 
 #  deploy:
