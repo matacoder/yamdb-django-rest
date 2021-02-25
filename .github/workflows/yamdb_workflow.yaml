@@ -55,19 +55,23 @@ jobs:
         with:
           python-version: 3.8
 
+#      - name: Install SSH key
+#        uses: shimataro/ssh-key-action@v2
+#        with:
+#          key: ${{ secrets.SSH_KEY }}
+#          name: id_rsa
+#          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+#          run: |
+#            scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}:/home/matakov/test3.yaml
+
       - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1
         with:
-          key: ${{ secrets.SSH_KEY }}
-          name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
-          run: |
-            scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}:/home/matakov/test3.yaml
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-host: ${{ secrets.IP_HOST }}
 
       - name: Docker compose up
         run: |
-          echo "${{ secrets.SSH_KEY }}" >> ~/.ssh/id_rsa
-          ls -al ~/.ssh
           scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}:/home/matakov/test2.yaml
           ssh-keyscan -H ${{ secrets.IP_HOST }}  >> ~/.ssh/known_hosts
           docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}"
