@@ -55,16 +55,6 @@ jobs:
         with:
           python-version: 3.8
 
-#      - name: Install SSH key
-#        uses: shimataro/ssh-key-action@v2
-#        with:
-#          key: ${{ secrets.SSH_KEY }}
-#          name: id_rsa
-#          known_hosts: ${{ secrets.KNOWN_HOSTS }}
-#          run: |
-#            scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}:/home/matakov/test3.yaml
-
-
       - name: Install SSH key
         uses: kielabokkie/ssh-key-and-known-hosts-action@v1.1.0
         with:
@@ -74,9 +64,6 @@ jobs:
       - name: Add env var
         run: |
           sudo pip install docker-compose
-          openssl version
-          docker-compose version
-          docker version
           export DB_ENGINE=${{ secrets.DB_ENGINE }}
           export DB_NAME=${{ secrets.DB_NAME }}
           export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
@@ -87,12 +74,13 @@ jobs:
           export DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
           export DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
           export DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
-          export COMPOSE_PARAMIKO_SSH=1
 
       - name: Docker compose up
         run: |
           docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}"
           docker context use remote
+          docker kill $(docker ps -q)
+          docker rm $(docker ps -a -q)
           docker-compose --context remote up -d --force-recreate
 
 #  deploy:
