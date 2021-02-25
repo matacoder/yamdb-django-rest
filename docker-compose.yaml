@@ -4,7 +4,7 @@ volumes:
   postgres_data:
   static_sp2:
   media_sp2:
-  logs_sp2:
+  nginx_conf:
 
 services:
   db:
@@ -13,7 +13,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
-  web:
+  django:
     image: matakov/yamdb:latest
     container_name: django
     restart: always
@@ -26,6 +26,8 @@ services:
     volumes:
       - static_sp2:/code/static
       - media_sp2:/code/media
+      - nginx_conf:/code/nginx/
+    entrypoint: /code/entrypoint.sh
 
   nginx:
     # build: ./nginx
@@ -35,7 +37,7 @@ services:
     volumes:
       - static_sp2:/code/static
       - media_sp2:/code/media
-      - ./nginx/:/etc/nginx/conf.d/
+      - nginx_conf:/etc/nginx/conf.d/
     depends_on:
-      - web
+      - django
     restart: "on-failure"
