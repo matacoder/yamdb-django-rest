@@ -11,8 +11,8 @@ services:
     image: postgres:12.4
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - ./.env
+#    env_file:
+#      - ./.env
   django:
     image: matakov/yamdb:latest
     container_name: django
@@ -21,8 +21,8 @@ services:
       - PORT=8000
     depends_on:
       - db
-    env_file:
-      - ./.env
+#    env_file:
+#      - ./.env
     volumes:
       - static_sp2:/code/static
       - media_sp2:/code/media
