@@ -61,6 +61,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          run: |
+            scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}:/home/matakov/test3.yaml
 
       - name: Docker compose up
         run: |
