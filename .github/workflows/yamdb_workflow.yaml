@@ -74,6 +74,8 @@ jobs:
       - name: Add env var
         run: |
           sudo apt-get install openssh-server openssh-client
+          docker-compose -v
+          docker version
           export DB_ENGINE=${{ secrets.DB_ENGINE }}
           export DB_NAME=${{ secrets.DB_NAME }}
           export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
