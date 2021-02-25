@@ -73,7 +73,8 @@ jobs:
 
       - name: Add env var
         run: |
-          sudo apt update && sudo apt upgrade -y
+          sudo apt-get update
+          sudo apt-get upgrade docker-ce
           export DB_ENGINE=${{ secrets.DB_ENGINE }}
           export DB_NAME=${{ secrets.DB_NAME }}
           export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
