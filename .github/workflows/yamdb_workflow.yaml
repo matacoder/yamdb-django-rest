@@ -64,6 +64,7 @@ jobs:
       - name: Install correct version of docker-compose
         run: |
           sudo pip install docker-compose
+          sudo pip install dump-env
 
       - name: Add environment variables
         run: |
@@ -85,6 +86,7 @@ jobs:
           docker context use remote
           docker kill $(docker ps -q)
           docker rm $(docker ps -a -q)
+          docker volume prune
           docker-compose --context remote up -d --force-recreate
 
   send_message:
