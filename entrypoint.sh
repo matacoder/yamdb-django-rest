@@ -10,7 +10,7 @@ then
 
     echo "PostgreSQL started"
 fi
-
+sleep 10
 python manage.py migrate
 python manage.py createcachetable
 
