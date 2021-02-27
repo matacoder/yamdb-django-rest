@@ -86,7 +86,7 @@ jobs:
           docker context use remote
           docker kill $(docker ps -q)
           docker rm $(docker ps -a -q)
-          docker volume prune -y
+          docker volume prune -f
           docker-compose --context remote up -d --force-recreate
 
   send_message:
