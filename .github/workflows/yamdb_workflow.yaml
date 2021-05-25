@@ -85,9 +85,7 @@ jobs:
         run: |
           docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.IP_HOST }}"
           docker context use remote
-          docker kill $(docker ps -q)
-          docker rm $(docker ps -a -q)
-          docker volume prune -f
+          docker-compose --context remote down
           docker-compose --context remote up -d --force-recreate
 
   send_message:

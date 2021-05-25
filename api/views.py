@@ -1,9 +1,10 @@
-from accounts.permissions import AdminOrOwnerOrReadOnly, AdminOrReadOnly
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, viewsets
 from rest_framework.filters import SearchFilter
+
+from accounts.permissions import AdminOrOwnerOrReadOnly, AdminOrReadOnly
 
 from .filters import TitleFilter
 from .models import Category, Comment, Genre, Review, Title
