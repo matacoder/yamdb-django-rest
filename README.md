@@ -1,5 +1,5 @@
 #Yandex Movie Database REST API (YaMDB)
-<img src="https://raw.githubusercontent.com/matacoder/matacoder/main/yamdb.png">
+<img src="https://raw.githubusercontent.com/matacoder/matacoder/main/yamdb2.png">
 
 [![DJANGO REST workflow](https://github.com/matacoder/yamdb_final/actions/workflows/yamdb_workflow.yaml/badge.svg)](https://github.com/matacoder/yamdb_final/actions/workflows/yamdb_workflow.yaml)
 
