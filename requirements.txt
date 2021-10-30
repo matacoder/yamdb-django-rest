@@ -3,6 +3,7 @@ atomicwrites==1.4.0
 attrs==19.3.0
 certifi==2020.4.5.1
 chardet==3.0.4
+charset-normalizer==2.0.7
 colorama==0.4.4
 Django==3.2.8
 django-filter==2.4.0
@@ -29,7 +30,7 @@ pytest==5.4.1
 pytest-django==3.9.0
 python-dotenv==0.15.0
 pytz==2019.3
-requests==2.23.0
+requests==2.26.0
 six==1.14.0
 sqlparse==0.3.1
 urllib3==1.26.7
