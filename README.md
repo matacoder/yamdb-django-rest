@@ -32,6 +32,7 @@ Documentation is available here: [https://rest.matakov.com/#section/Opisanie](ht
 - Administrator
 - Django Administrator
 
+Moved to another hosting.
 ## Models
 
 - Reviews
